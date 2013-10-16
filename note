@@ -1,0 +1,20 @@
+Elément non pris en compte dans ORM :
+
+1)
+L'adhérent dépose une somme variable qui servira à la fois de caution (en cas de perte) et de cotisation annuelle, cette somme alimente le compte du client.
+
+2)
+L'internaute doit s'identifier pour avoir accès au catalogue de la médiathèque
+Il est invité à entrer les critères de recherche de son item
+Le système retourne une liste correspondant à ces critères de recherche
+
+3)
+Enregistrement de l'adhésion du nouvel emprunteur si celui-ci n'est pas adhérent
+L'adhérent demande au gestionnaire les items de son choix ou constitue un panier sur place
+Pas de renouvellement possible sans interruption pour un même item sauf pour les livres qui peuvent être renouvelés un fois.
+Si l'item souhaité n'est pas disponible, le client peut le réserver.
+
+
+5)Le gestionnaire tient compte du goûts des adhérents, des succès en salle, des indications de la critique
+Le système regroupe toutes les lignes de commandes concernant un fournisseur pour rédiger un bon de commande par fournisseur.
+
