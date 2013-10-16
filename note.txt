@@ -1,3 +1,14 @@
+A faire dans le rapport :
+- modèle ORM justifié
+- expression des contraintes
+
+
+- statuts à passer en enum
+- associer type de produit à limite d'emprunt
+- limite d'emprunt : faire enum
+- vérifier cardinalité
+
+
 Elément non pris en compte dans ORM :
 
 1)
@@ -18,4 +29,3 @@ Si l'item souhaité n'est pas disponible, le client peut le réserver.
 5)Le gestionnaire tient compte du goûts des adhérents, des succès en salle, des indications de la critique
 Le système regroupe toutes les lignes de commandes concernant un fournisseur pour rédiger un bon de commande par fournisseur.
 
-NOUVEL NOTE
