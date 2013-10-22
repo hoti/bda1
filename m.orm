@@ -459,9 +459,9 @@
 					<orm:ReadingOrder id="_DB274BE1-7F12-4223-9B1A-FE417C107B6C">
 						<orm:Readings>
 							<orm:Reading id="_DB689E72-A03C-4B52-8C13-D8D4736EC0E8">
-								<orm:Data>{0} depose {1}</orm:Data>
+								<orm:Data>{0} deposit {1}</orm:Data>
 								<orm:ExpandedData>
-									<orm:RoleText RoleIndex="0" FollowingText=" depose " />
+									<orm:RoleText RoleIndex="0" FollowingText=" deposit " />
 								</orm:ExpandedData>
 							</orm:Reading>
 						</orm:Readings>
@@ -993,7 +993,7 @@
 					<ormDiagram:ObjectifiedFactTypeNameShape id="_A5E5C7B4-843F-45D2-9941-AEDBB8DF241D" IsExpanded="true" AbsoluteBounds="5.322916666666667, 0.84251627355813952, 0.60092949867248535, 0.12950302660465241">
 						<ormDiagram:Subject ref="_8393E94B-D14E-403B-A755-167684D520FC" />
 					</ormDiagram:ObjectifiedFactTypeNameShape>
-					<ormDiagram:ReadingShape id="_A379D7BB-B164-4D56-956A-5CEF0A9A7F07" IsExpanded="true" AbsoluteBounds="5.34375, 1.3865778824264803, 0.34752511978149414, 0.12950302660465241">
+					<ormDiagram:ReadingShape id="_A379D7BB-B164-4D56-956A-5CEF0A9A7F07" IsExpanded="true" AbsoluteBounds="5.34375, 1.3865778824264803, 0.35122790932655334, 0.12950302660465241">
 						<ormDiagram:Subject ref="_DB274BE1-7F12-4223-9B1A-FE417C107B6C" />
 					</ormDiagram:ReadingShape>
 				</ormDiagram:RelativeShapes>
