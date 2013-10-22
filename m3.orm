@@ -117,10 +117,10 @@
 		<orm:Facts>
 			<orm:Fact id="_B78A48E6-3988-4B85-BFF1-02372F6DCE15" _Name="adhérentCreateemprunt">
 				<orm:FactRoles>
-					<orm:Role id="_6675F911-EF2E-4E64-AEDA-ED7451099392" _IsMandatory="false" _Multiplicity="ZeroToOne" Name="">
+					<orm:Role id="_6675F911-EF2E-4E64-AEDA-ED7451099392" _IsMandatory="false" _Multiplicity="ExactlyOne" Name="">
 						<orm:RolePlayer ref="_5FEB153C-B0E7-449E-9913-FBD6A2538DD6" />
 					</orm:Role>
-					<orm:Role id="_586972D0-B158-479F-8655-5F49094E7249" _IsMandatory="false" _Multiplicity="ZeroToMany" Name="">
+					<orm:Role id="_586972D0-B158-479F-8655-5F49094E7249" _IsMandatory="true" _Multiplicity="ZeroToMany" Name="">
 						<orm:RolePlayer ref="_4A13E6CD-B423-4B34-AA29-B32DCA2687B5" />
 					</orm:Role>
 				</orm:FactRoles>
@@ -142,9 +142,9 @@
 					<orm:ReadingOrder id="_C532DF95-2331-42F1-A513-C4B58D7BA91F">
 						<orm:Readings>
 							<orm:Reading id="_DB5C985E-494C-46F9-80D4-521567BEBA28">
-								<orm:Data>{0} createby {1}</orm:Data>
+								<orm:Data>{0} created by {1}</orm:Data>
 								<orm:ExpandedData>
-									<orm:RoleText RoleIndex="0" FollowingText=" createby " />
+									<orm:RoleText RoleIndex="0" FollowingText=" created by " />
 								</orm:ExpandedData>
 							</orm:Reading>
 						</orm:Readings>
@@ -156,6 +156,7 @@
 				</orm:ReadingOrders>
 				<orm:InternalConstraints>
 					<orm:UniquenessConstraint ref="_8169F861-B2E7-43EF-ACAE-BFEED01627FC" />
+					<orm:MandatoryConstraint ref="_59EED334-9098-4135-91F0-81244C08BD22" />
 				</orm:InternalConstraints>
 			</orm:Fact>
 			<orm:Fact id="_CB1AE941-6389-4B35-83F4-032552E86AEE" _Name="empruntHaspanier">
@@ -1002,6 +1003,11 @@
 				</orm:RoleSequence>
 				<orm:ImpliedByObjectType ref="_51C02071-1641-4F1F-A8FC-5893522DF17E" />
 			</orm:MandatoryConstraint>
+			<orm:MandatoryConstraint id="_59EED334-9098-4135-91F0-81244C08BD22" Name="SimpleMandatoryConstraint5" IsSimple="true">
+				<orm:RoleSequence>
+					<orm:Role id="_F1D4A86E-0BD9-4A00-B4AC-C42291471E0F" ref="_586972D0-B158-479F-8655-5F49094E7249" />
+				</orm:RoleSequence>
+			</orm:MandatoryConstraint>
 		</orm:Constraints>
 		<orm:DataTypes>
 			<orm:UnsignedIntegerNumericDataType id="_A4B1B5EC-5601-468D-A34B-9516C35FB79B" />
@@ -1025,7 +1031,7 @@
 			</ormDiagram:ObjectTypeShape>
 			<ormDiagram:FactTypeShape id="_42486C3C-942F-4DEC-8F46-2D581C593A87" IsExpanded="true" AbsoluteBounds="3.135416666666667, 1.055, 0.38388888899236917, 0.24388888899236916">
 				<ormDiagram:RelativeShapes>
-					<ormDiagram:ReadingShape id="_D8395F1A-3494-4DA6-A388-ADD94BE66893" IsExpanded="true" AbsoluteBounds="3.135416666666667, 1.3636404022946953, 0.78592705726623535, 0.12950302660465241">
+					<ormDiagram:ReadingShape id="_D8395F1A-3494-4DA6-A388-ADD94BE66893" IsExpanded="true" AbsoluteBounds="3.135416666666667, 1.3636404022946953, 0.87256312370300293, 0.12950302660465241">
 						<ormDiagram:Subject ref="_B6087523-EF39-4021-975B-67A576C3EAE1" />
 					</ormDiagram:ReadingShape>
 				</ormDiagram:RelativeShapes>
