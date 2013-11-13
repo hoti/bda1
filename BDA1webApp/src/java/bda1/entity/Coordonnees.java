@@ -20,6 +20,16 @@ public class Coordonnees implements Serializable {
     private String adresse;
     private String numeroTelephone;
 
+    public Coordonnees() {
+    }
+
+    public Coordonnees(String adresse, String numeroTelephone) {
+        this.adresse = adresse;
+        this.numeroTelephone = numeroTelephone;
+    }
+
+    
+    
     @Override
     public int hashCode() {
         int hash = 0;

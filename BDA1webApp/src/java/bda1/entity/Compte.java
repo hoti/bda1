@@ -2,10 +2,12 @@ package bda1.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -36,6 +38,7 @@ public class Compte implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateInscription;
     
+    @ManyToOne(cascade = ALL)
     private Coordonnees coordonnees;
     
     /**
@@ -43,11 +46,27 @@ public class Compte implements Serializable {
      * bibliothèque
      */
     private float somme;
+
+    public Compte() {
+    }
+    
+    public Compte(String nom, String prenom, Date dateNaissance, Date dateInscription, Coordonnees coordonnees) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.dateNaissance = dateNaissance;
+        this.dateInscription = dateInscription;
+        this.coordonnees = coordonnees;
+        this.somme = 0;
+    }
+    
+    
     
     /****************************************************************
      * DEFAULT METHODS
      ***************************************************************/
-
+    
+    
+    
     @Override
     public int hashCode() {
         int hash = 0;
