@@ -44,9 +44,6 @@ public class Compte implements Serializable {
      * bibliothèque
      */
     private float somme;
-
-    @OneToMany
-    private CarteMagnetique carteMagnetiques;
     
     /****************************************************************
      * DEFAULT METHODS
@@ -124,14 +121,6 @@ public class Compte implements Serializable {
 
     public void setCoordonnees(Coordonnees coordonnees) {
         this.coordonnees = coordonnees;
-    }
-
-    public CarteMagnetique getCarteMagnetiques() {
-        return carteMagnetiques;
-    }
-
-    public void setCarteMagnetiques(CarteMagnetique carteMagnetiques) {
-        this.carteMagnetiques = carteMagnetiques;
     }
 
     public float getSomme() {

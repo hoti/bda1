@@ -2,10 +2,12 @@
 package bda1.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -17,7 +19,18 @@ public class Adherent implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
+    @OneToMany
+    private List<CarteMagnetique> cartesMagnetiques;
 
+    /****************************************************************
+     * GETTER AND SETTER
+     *
+     ***************************************************************/
+    
+    /**
+     * @return  Identifiant de l'instance adhérent
+     */
     public Long getId() {
         return id;
     }
@@ -25,6 +38,19 @@ public class Adherent implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+    
+    public List<CarteMagnetique> getCartesMagnetiques() {
+        return cartesMagnetiques;
+    }
+
+    public void setCartesMagnetiques(List<CarteMagnetique> cartesMagnetiques) {
+        this.cartesMagnetiques = cartesMagnetiques;
+    }
+
+
+    /****************************************************************
+     * DEFAULT METHODS
+     ***************************************************************/
 
     @Override
     public int hashCode() {
