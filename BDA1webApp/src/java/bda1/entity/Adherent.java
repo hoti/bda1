@@ -2,12 +2,11 @@
 package bda1.entity;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -20,13 +19,16 @@ public class Adherent implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    @OneToMany
-    private List<CarteMagnetique> cartesMagnetiques;
+    @OneToOne(mappedBy = "adherent")
+    private CarteMagnetique carteMagnetique;
+    
+    @OneToOne(mappedBy = "adherent")
+    private Compte compte;
 
-    /****************************************************************
+
+    /*=============================================================*
      * GETTER AND SETTER
-     *
-     ***************************************************************/
+     *=============================================================*/
     
     /**
      * @return  Identifiant de l'instance adhérent
@@ -39,18 +41,25 @@ public class Adherent implements Serializable {
         this.id = id;
     }
     
-    public List<CarteMagnetique> getCartesMagnetiques() {
-        return cartesMagnetiques;
+    public CarteMagnetique getCarteMagnetique() {
+        return carteMagnetique;
     }
 
-    public void setCartesMagnetiques(List<CarteMagnetique> cartesMagnetiques) {
-        this.cartesMagnetiques = cartesMagnetiques;
+    public void setCarteMagnetique(CarteMagnetique carteMagnetique) {
+        this.carteMagnetique = carteMagnetique;
+    }
+     
+    public Compte getCompte() {
+        return compte;
     }
 
+    public void setCompte(Compte compte) {
+        this.compte = compte;
+    }
 
-    /****************************************************************
+    /*=============================================================*
      * DEFAULT METHODS
-     ***************************************************************/
+     *=============================================================*/
 
     @Override
     public int hashCode() {
@@ -66,10 +75,7 @@ public class Adherent implements Serializable {
             return false;
         }
         Adherent other = (Adherent) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
     }
 
     @Override
