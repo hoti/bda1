@@ -26,20 +26,16 @@ public class Compte implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    @OneToOne
     private String nom;
-    @OneToOne
+    
     private String prenom;
     
-    @OneToOne
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateNaissance;
 
-    @OneToOne
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateInscription;
     
-    @OneToOne
     private Coordonnees coordonnees;
     
     /**
