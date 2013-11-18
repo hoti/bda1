@@ -2,10 +2,14 @@
 package bda1.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -18,6 +22,27 @@ public class Exemplaire implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    private Statut statut;
+    private int NombreEmprunt;
+    
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date dateReservation;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date DateFinReservation;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date DateArriveeStock;
+    
+    @OneToOne
+    private Produit produit;
+
+    //TODO Passer en bidirectionnel ?
+    @ManyToOne
+    private Panier panier;
+    
+    /*=============================================================*
+     * GETTER AND SETTER
+     *=============================================================*/
+  
     public Long getId() {
         return id;
     }
@@ -26,6 +51,64 @@ public class Exemplaire implements Serializable {
         this.id = id;
     }
 
+    public Statut getStatut() {
+        return statut;
+    }
+
+    public void setStatut(Statut statut) {
+        this.statut = statut;
+    }
+
+    public int getNombreEmprunt() {
+        return NombreEmprunt;
+    }
+
+    public void setNombreEmprunt(int NombreEmprunt) {
+        this.NombreEmprunt = NombreEmprunt;
+    }
+
+    public Date getDateReservation() {
+        return dateReservation;
+    }
+
+    public void setDateReservation(Date dateReservation) {
+        this.dateReservation = dateReservation;
+    }
+
+    public Date getDateFinReservation() {
+        return DateFinReservation;
+    }
+
+    public void setDateFinReservation(Date DateFinReservation) {
+        this.DateFinReservation = DateFinReservation;
+    }
+
+    public Date getDateArriveeStock() {
+        return DateArriveeStock;
+    }
+
+    public void setDateArriveeStock(Date DateArriveeStock) {
+        this.DateArriveeStock = DateArriveeStock;
+    }
+
+    public Produit getProduit() {
+        return produit;
+    }
+
+    public void setProduit(Produit produit) {
+        this.produit = produit;
+    }
+
+    public Panier getPanier() {
+        return panier;
+    }
+
+    public void setPanier(Panier panier) {
+        this.panier = panier;
+    }
+
+    
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -40,10 +123,7 @@ public class Exemplaire implements Serializable {
             return false;
         }
         Exemplaire other = (Exemplaire) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
     }
 
     @Override

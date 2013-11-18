@@ -2,10 +2,12 @@
 package bda1.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 /**
  *
@@ -18,6 +20,15 @@ public class Auteur implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    private String nom;
+    
+    @ManyToMany(mappedBy = "auteurs")
+    private List<Produit> produits;
+
+    /*=============================================================*
+     * GETTER AND SETTER
+     *=============================================================*/
+
     public Long getId() {
         return id;
     }
@@ -25,7 +36,23 @@ public class Auteur implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+    
+    public String getNom() {
+        return nom;
+    }
 
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public List<Produit> getProduits() {
+        return produits;
+    }
+
+    public void setProduits(List<Produit> produits) {
+        this.produits = produits;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -40,15 +67,12 @@ public class Auteur implements Serializable {
             return false;
         }
         Auteur other = (Auteur) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
     }
 
     @Override
     public String toString() {
         return "bda1.entity.Auteur[ id=" + id + " ]";
     }
-    
+
 }

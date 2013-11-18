@@ -2,10 +2,12 @@
 package bda1.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 /**
  *
@@ -18,6 +20,15 @@ public class Genre implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    private String nom;
+    
+    @ManyToMany(mappedBy = "genre")
+    private List<Produit> produits;
+
+    /*=============================================================*
+     * GETTER AND SETTER
+     *=============================================================*/
+
     public Long getId() {
         return id;
     }
@@ -26,6 +37,22 @@ public class Genre implements Serializable {
         this.id = id;
     }
 
+    public List<Produit> getProduits() {
+        return produits;
+    }
+
+    public void setProduits(List<Produit> produits) {
+        this.produits = produits;
+    }
+
+        public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -40,10 +67,7 @@ public class Genre implements Serializable {
             return false;
         }
         Genre other = (Genre) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
     }
 
     @Override
