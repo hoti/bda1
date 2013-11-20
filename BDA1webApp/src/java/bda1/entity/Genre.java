@@ -22,7 +22,7 @@ public class Genre implements Serializable {
 
     private String nom;
     
-    @ManyToMany(mappedBy = "genre")
+    @ManyToMany(mappedBy = "genres")
     private List<Produit> produits;
 
     /*=============================================================*

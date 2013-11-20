@@ -27,7 +27,7 @@ public class Adherent implements Serializable {
     @OneToOne(mappedBy = "adherent")
     private Compte compte;
     
-    @OneToMany(mappedBy="bateau")
+        @OneToMany(mappedBy="adherent")
     private Collection<Panier> paniers;
 
     /*=============================================================*

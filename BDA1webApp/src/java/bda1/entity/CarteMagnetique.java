@@ -16,8 +16,23 @@ public class CarteMagnetique implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
+    private Adherent adherent;
+    
     public Long getId() { return id; }
     public void setID(Long id) { this.id = id; }
+
+    public Adherent getAdherent() {
+        return adherent;
+    }
+
+    public void setAdherent(Adherent adherent) {
+        this.adherent = adherent;
+    }
+    
+    
+    
+    
     
     @Override
     public int hashCode() {

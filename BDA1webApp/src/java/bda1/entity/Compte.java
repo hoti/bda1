@@ -47,6 +47,9 @@ public class Compte implements Serializable {
      */
     private float somme;
 
+    
+    private Adherent adherent;
+    
     public Compte() {
     }
     
@@ -147,6 +150,14 @@ public class Compte implements Serializable {
 
     public void setSomme(float somme) {
         this.somme = somme;
+    }
+
+    public Adherent getAdherent() {
+        return adherent;
+    }
+
+    public void setAdherent(Adherent adherent) {
+        this.adherent = adherent;
     }
     
 }

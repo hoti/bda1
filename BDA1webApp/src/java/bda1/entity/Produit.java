@@ -36,7 +36,7 @@ public class Produit implements Serializable {
     @ManyToMany
     private List<Genre> genres;
     
-    @ManyToOne
+    
     private ProduitType type;
     
     //PENDING A-t'on besoin de l'objet catalogueMediatheque qui sera juste un
