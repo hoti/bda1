@@ -3,28 +3,42 @@ package bda1.entity;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQuery;
 
 /**
  *
  * @author GaspardP <gaspardp@kth.se>
  */
 @Entity
+@NamedQuery(name = "findGenre", query = "SELECT o FROM Genre o "
++ "WHERE o.nom = :nom ")
 public class Genre implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
+    
+    @Column(unique=true)
     private String nom;
     
     @ManyToMany(mappedBy = "genres")
     private List<Produit> produits;
 
+    public Genre() {
+    }
+
+    public Genre(String nom) {
+        this.nom = nom;
+    }
+    
+    
+    
     /*=============================================================*
      * GETTER AND SETTER
      *=============================================================*/

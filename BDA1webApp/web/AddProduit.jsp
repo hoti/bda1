@@ -1,3 +1,4 @@
+<%@page import="bda1.entity.ProduitType"%>
 <!--
   Copyright (c) 2010, Oracle. All rights reserved.
 
@@ -38,22 +39,41 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Create a Compte Record</title>
+        <title>Add a Produit</title>
     </head>
     <body>
 
-    <h1>Create a Compte record</h1>
-    <form id="createCompteForm" action="CreateCompte" method="post">
+    <h1>Add a Produit</h1>
+    <form id="addProduitForm" action="AddProduit" method="post">
     <table>
-        <tr><td>Prénom</td><td><input type="text" id = "prenom" name="prenom" /></td></tr>
-        <tr><td>Nom</td><td><input type="text" id = "nom" name="nom" /></td></tr>
-        <tr><td>Date de Naissance</td><td><input type="text" id = "dateNaissance" name="dateNaissance" /></td></tr>
-        <tr><td>Date d'Inscription</td><td><input type="text" id = "dateInscription" name="dateInscription" /></td></tr>
-        <tr><td>Adresse</td><td><input type="text" id = "adresse" name="adresse" /></td></tr>
-        <tr><td>N° de téléphone</td><td><input type="text" id = "numeroTelephone" name="numeroTelephone" /></td></tr>
+        <tr><td>Titre</td><td><input type="text" id = "titre" name="titre" /></td></tr>
+        <tr><td>Peut être Réemprunté :</td>
+            <td>
+            <input type="radio" name="peutEtreReemprunter" value="True">Oui<br>
+            <input type="radio" name="peutEtreReemprunter" value="False">Non<br>
+            </td>
+        </tr>
+        <tr><td>Type :</td>
+            <td>
+                <%
+                    for(ProduitType t:ProduitType.values())
+                    {
+                        %>
+                            <input type="radio" name="type" value="<%= t.toString() %>"><%= t.toString() %><br>
+                        <%
+                    }
+                    %>
+            </td>
+        </tr>
+        <tr><td>Genre 1</td><td><input type="text" id = "titre" name="genre1" /></td></tr>
+        <tr><td>Genre 2</td><td><input type="text" id = "titre" name="genre2" /></td></tr>
+        <tr><td>Genre 3</td><td><input type="text" id = "titre" name="genre3" /></td></tr>
+        <tr><td>Auteur 1</td><td><input type="text" id = "titre" name="auteur1" /></td></tr>
+        <tr><td>Auteur 2</td><td><input type="text" id = "titre" name="auteur2" /></td></tr>
+        <tr><td>Auteur 3</td><td><input type="text" id = "titre" name="auteur3" /></td></tr>
     </table>
-    <input type="submit" id="CreateCompte" value="CreateCompte" />
+    <input type="submit" id="AddProduit" value="AddProduit" />
     </form>
-    <a href="ListCompte"><strong>Go to List of compte</strong></a>
+   <!-- <a href="ListCompte"><strong>Go to List of compte</strong></a>-->
 </body>
 </html>

@@ -18,9 +18,6 @@ public class Panier implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
-    @ManyToOne
-    private Adherent adherent;
 
     public Long getId() {
         return id;

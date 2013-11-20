@@ -26,8 +26,8 @@ import javax.transaction.UserTransaction;
  *
  * @author GaspardP <gaspardp@kth.se>
  */
-@WebServlet(name="CreateCompteServlet", urlPatterns={"/CreateCompte"})
-public class CreateCompteServlet extends HttpServlet {
+@WebServlet(name="AddGenreServlet", urlPatterns={"/AddGenre"})
+public class AddGenreServlet extends HttpServlet {
     
     @PersistenceUnit
     //The emf corresponding to 
@@ -57,40 +57,16 @@ public class CreateCompteServlet extends HttpServlet {
             
             
             //Get the data from user's form
-            String prenom = (String) request.getParameter("prenom");
-            String nom   = (String) request.getParameter("nom");
-            String str_dateNaissance   = (String) request.getParameter("dateNaissance");
-            String str_dateInscription   = (String) request.getParameter("dateInscription");
-            String adresse   = (String) request.getParameter("adresse");
-            String numeroTelephone   = (String) request.getParameter("numeroTelephone");
-            
-            
-            Coordonnees coordonnees = new Coordonnees(adresse,numeroTelephone);
-            
-            DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-            Date dateNaissance = null;
-            Date dateInscription = null;
-            
-            
-            if(str_dateNaissance!=null && !str_dateNaissance.equals(""))
-                dateNaissance = formatter.parse(str_dateNaissance);
-            if(str_dateInscription!=null && !str_dateInscription.equals(""))
-                dateInscription = formatter.parse(str_dateInscription);
-            
+            String nom = (String) request.getParameter("nom");
+           
             //Create a person instance out of it
-            Compte compte = new Compte(prenom, nom,dateNaissance,dateInscription,coordonnees);
+            Genre genre = new Genre(nom);
             
-            Adherent adherent = new Adherent();
-            adherent.setCompte(compte);
+           
             
-            Panier panier=new Panier();
-            adherent.setPanier(panier);
-            
-            CarteMagnetique carteMagnetique=new CarteMagnetique();
-            adherent.setCarteMagnetique(carteMagnetique);
             
             //persist the person entity
-            em.persist(adherent);
+            em.persist(genre);
             
             //commit transaction which will trigger the em to 
             //commit newly created entity into database
@@ -98,7 +74,7 @@ public class CreateCompteServlet extends HttpServlet {
             
             //Forward to ListPerson servlet to list persons along with the newly
             //created person above
-            request.getRequestDispatcher("ListCompte").forward(request, response);
+            request.getRequestDispatcher("ListGenre").forward(request, response);
         } catch (Exception ex) {
             throw new ServletException(ex);
         } finally {

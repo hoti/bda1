@@ -1,3 +1,6 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
+
 <!--
   Copyright (c) 2010, Oracle. All rights reserved.
 
@@ -31,6 +34,7 @@
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -38,22 +42,30 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Create a Compte Record</title>
+        <title>List Of Adherents</title>
     </head>
     <body>
 
-    <h1>Create a Compte record</h1>
-    <form id="createCompteForm" action="CreateCompte" method="post">
-    <table>
-        <tr><td>Prénom</td><td><input type="text" id = "prenom" name="prenom" /></td></tr>
-        <tr><td>Nom</td><td><input type="text" id = "nom" name="nom" /></td></tr>
-        <tr><td>Date de Naissance</td><td><input type="text" id = "dateNaissance" name="dateNaissance" /></td></tr>
-        <tr><td>Date d'Inscription</td><td><input type="text" id = "dateInscription" name="dateInscription" /></td></tr>
-        <tr><td>Adresse</td><td><input type="text" id = "adresse" name="adresse" /></td></tr>
-        <tr><td>N° de téléphone</td><td><input type="text" id = "numeroTelephone" name="numeroTelephone" /></td></tr>
-    </table>
-    <input type="submit" id="CreateCompte" value="CreateCompte" />
-    </form>
-    <a href="ListCompte"><strong>Go to List of compte</strong></a>
+    <h1>List of Adherents currently in Database</h1>
+
+<table id="adherentListTable" border="3">
+<tr >
+    <th bgcolor=>ID</th>
+    <th bgcolor=>Carte Magnetique</th>
+    <th bgcolor=>Compte</th>
+    <th bgcolor=>Panier</th>
+</tr>
+<c:forEach var="adherent" begin="0" items="${requestScope.adherentList}">
+    <tr>
+    <td>${adherent.id}&nbsp;&nbsp;</td> 
+    <td>${adherent.carteMagnetique.id}&nbsp;&nbsp;</td> 
+    <td>${adherent.compte.id}&nbsp;&nbsp;</td>    
+    <td>${adherent.panier.id}&nbsp;&nbsp;</td> 
+</tr> 
+
+</c:forEach>
+
+</table>
+<a href="CreateCompte.jsp"><strong>Create a Compte Record</strong></a>
 </body>
 </html>

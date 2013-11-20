@@ -3,10 +3,12 @@ package bda1.entity;
 
 import java.io.Serializable;
 import java.util.Collection;
+import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -21,14 +23,17 @@ public class Adherent implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    @OneToOne(mappedBy = "adherent")
+    @OneToOne(cascade = ALL)
+    @JoinColumn(name="carteMagnetique_id", referencedColumnName="id")
     private CarteMagnetique carteMagnetique;
     
-    @OneToOne(mappedBy = "adherent")
+    @OneToOne(cascade = ALL)
+    @JoinColumn(name="compte_id", referencedColumnName="id")
     private Compte compte;
     
-        @OneToMany(mappedBy="adherent")
-    private Collection<Panier> paniers;
+    @OneToOne(cascade = ALL)
+    @JoinColumn(name="panier_id", referencedColumnName="id")
+    private Panier panier;
 
     /*=============================================================*
      * GETTER AND SETTER
@@ -61,6 +66,16 @@ public class Adherent implements Serializable {
         this.compte = compte;
     }
 
+    public void setPanier(Panier panier) {
+        this.panier = panier;
+    }
+
+    public Panier getPanier() {
+        return panier;
+    }
+
+    
+    
     /*=============================================================*
      * DEFAULT METHODS
      *=============================================================*/

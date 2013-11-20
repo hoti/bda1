@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -17,21 +19,8 @@ public class CarteMagnetique implements Serializable{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    private Adherent adherent;
-    
     public Long getId() { return id; }
     public void setID(Long id) { this.id = id; }
-
-    public Adherent getAdherent() {
-        return adherent;
-    }
-
-    public void setAdherent(Adherent adherent) {
-        this.adherent = adherent;
-    }
-    
-    
-    
     
     
     @Override

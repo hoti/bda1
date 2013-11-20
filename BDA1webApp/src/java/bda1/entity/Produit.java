@@ -4,10 +4,13 @@ package bda1.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
@@ -31,23 +34,45 @@ public class Produit implements Serializable {
     private Date datePublication;
     
     @ManyToMany
+    @JoinTable(name="produits_auteurs",
+            joinColumns=@JoinColumn(name="produit_id", referencedColumnName="id"),
+            inverseJoinColumns=@JoinColumn(name="auteur_id", referencedColumnName="id"))
     private List<Auteur> auteurs;
     
     @ManyToMany
+    @JoinTable(name="produits_genres",
+            joinColumns=@JoinColumn(name="produit_id", referencedColumnName="id"),
+            inverseJoinColumns=@JoinColumn(name="genre_id", referencedColumnName="id"))
     private List<Genre> genres;
     
     
     private ProduitType type;
     
+    
     //PENDING A-t'on besoin de l'objet catalogueMediatheque qui sera juste un
     // singleton avec la liste de tous les produits. On doit pouvoir la
     // récupérer directement depuis la BDD
     //private UUID catalogueMediatheque
-
     /*=============================================================*
      * GETTER AND SETTER
      *=============================================================*/
+    
+     public Produit() {
+    }
+
+    
+     public Produit(String titre, boolean peutEtreReemprunter, int nombreDeDemandes, Date datePublication, List<Auteur> auteurs, List<Genre> genres, ProduitType type) {
+        this.titre = titre;
+        this.peutEtreReemprunter = peutEtreReemprunter;
+        this.nombreDeDemandes = nombreDeDemandes;
+        this.datePublication = datePublication;
+        this.auteurs = auteurs;
+        this.genres = genres;
+        this.type = type;
+    }
  
+     
+     
     public Long getId() {
         return id;
     }

@@ -1,3 +1,4 @@
+<%@page import="bda1.entity.ProduitType"%>
 <!--
   Copyright (c) 2010, Oracle. All rights reserved.
 
@@ -38,22 +39,18 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Create a Compte Record</title>
+        <title>Add a Genre</title>
     </head>
     <body>
 
-    <h1>Create a Compte record</h1>
-    <form id="createCompteForm" action="CreateCompte" method="post">
+    <h1>Add a Genre</h1>
+    <form id="addGenreForm" action="AddGenre" method="post">
     <table>
-        <tr><td>Prénom</td><td><input type="text" id = "prenom" name="prenom" /></td></tr>
         <tr><td>Nom</td><td><input type="text" id = "nom" name="nom" /></td></tr>
-        <tr><td>Date de Naissance</td><td><input type="text" id = "dateNaissance" name="dateNaissance" /></td></tr>
-        <tr><td>Date d'Inscription</td><td><input type="text" id = "dateInscription" name="dateInscription" /></td></tr>
-        <tr><td>Adresse</td><td><input type="text" id = "adresse" name="adresse" /></td></tr>
-        <tr><td>N° de téléphone</td><td><input type="text" id = "numeroTelephone" name="numeroTelephone" /></td></tr>
+       
     </table>
-    <input type="submit" id="CreateCompte" value="CreateCompte" />
+    <input type="submit" id="AddGenre" value="AddGenre" />
     </form>
-    <a href="ListCompte"><strong>Go to List of compte</strong></a>
+   <!-- <a href="ListCompte"><strong>Go to List of compte</strong></a>-->
 </body>
 </html>
