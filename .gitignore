@@ -1,3 +1,6 @@
+*.properties
+*.xml
+
 #################
 ## Eclipse
 #################
@@ -213,3 +216,4 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+/BDA1webApp/nbproject/private/
