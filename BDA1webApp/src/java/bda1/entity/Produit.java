@@ -13,13 +13,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
+import javax.persistence.NamedQuery;
 
 /**
  *
  * @author GaspardP <gaspardp@kth.se>
  */
 @Entity
+@NamedQuery(name = "findProduit", query = "SELECT o FROM Produit o "
++ "WHERE o.id = :id ")
 public class Produit implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -48,6 +52,9 @@ public class Produit implements Serializable {
     
     private ProduitType type;
     
+    
+    @OneToMany(mappedBy="produit")
+    private List<Exemplaire> exemplaires;
     
     //PENDING A-t'on besoin de l'objet catalogueMediatheque qui sera juste un
     // singleton avec la liste de tous les produits. On doit pouvoir la

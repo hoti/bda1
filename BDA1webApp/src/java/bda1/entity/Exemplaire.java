@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -32,17 +33,29 @@ public class Exemplaire implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date DateArriveeStock;
     
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name="produit_id", referencedColumnName="id")
     private Produit produit;
 
     //TODO Passer en bidirectionnel ?
     @ManyToOne
+    @JoinColumn(name="panier_id", referencedColumnName="id")
     private Panier panier;
     
     /*=============================================================*
      * GETTER AND SETTER
      *=============================================================*/
+    public Exemplaire() {
+    }
+
+    public Exemplaire(Statut statut, Date DateArriveeStock, Produit produit) {
+        this.statut = statut;
+        this.DateArriveeStock = DateArriveeStock;
+        this.produit = produit;
+    }
   
+    
+    
     public Long getId() {
         return id;
     }
