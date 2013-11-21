@@ -82,12 +82,15 @@ public class ReserverProduitServlet extends HttpServlet {
 
             }
             
-            
-           produit.addAdherentsDemandeur(adherent);
+            if(adherent.getCompte().isaPaye())
+            {
+                produit.addAdherentsDemandeur(adherent);
            
-            //persist the person entity
-            em.persist(produit);
-            em.refresh(produit,LockModeType.OPTIMISTIC);
+           
+           
+               //persist the person entity
+               em.persist(produit);
+            }
             //commit transaction which will trigger the em to 
             //commit newly created entity into database
             utx.commit();

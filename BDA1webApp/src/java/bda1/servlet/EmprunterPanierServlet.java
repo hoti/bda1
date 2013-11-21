@@ -85,15 +85,19 @@ public class EmprunterPanierServlet extends HttpServlet {
 
             for (Exemplaire e : panier.getExemplaires()) {
                 if (dateDebutEmprunt.before(dateFinEmprunt) && dateDebutEmprunt.after(new Date())) {
-                    e.setStatut(Statut.EMPRUNTE);
-                    e.setPanier(null);
-                    e.setNombreEmprunt(e.getNombreEmprunt() + 1);
-                    e.setEmprunteurActuel(panier.getAdherent());
+                    if(panier.getAdherent().getCompte().isaPaye())
+                    {
+                        e.setStatut(Statut.EMPRUNTE);
+                        e.setPanier(null);
+                        e.setNombreEmprunt(e.getNombreEmprunt() + 1);
+                        e.setEmprunteurActuel(panier.getAdherent());
 
-                    e.setDateDebutEmprunt(dateDebutEmprunt);
-                    e.setDateFinEmprunt(dateFinEmprunt);
-                    //persist the person entity
-                    em.persist(e);
+                        e.setDateDebutEmprunt(dateDebutEmprunt);
+                        e.setDateFinEmprunt(dateFinEmprunt);
+                        //persist the person entity
+                    
+                        em.persist(e);
+                    }
                 }
             }
 

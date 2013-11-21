@@ -81,22 +81,26 @@ public class AddExemplaireDansPanierServlet extends HttpServlet {
             {
 
             }
-            
-             if(exemplaire.getDateArriveeStock().before(new Date()) &&  exemplaire.getPanier()==null && 
-                     (exemplaire.getStatut().equals(Statut.DISPONIBLE) || (exemplaire.getStatut().equals(Statut.RESERVE) && panier.getAdherent().equals(exemplaire.getReservePourCetAdherent()))))
+            assert (panier.getAdherent()!=null);
+             assert (panier.getAdherent().getCompte()!=null);       
+             if(panier.getAdherent().getCompte().isaPaye())
              {
-                exemplaire.setPanier(panier);
-                
-                if(exemplaire.getStatut().equals(Statut.RESERVE) && panier.getAdherent().equals(exemplaire.getReservePourCetAdherent()))
+                 
+                if(exemplaire.getDateArriveeStock().before(new Date()) &&  exemplaire.getPanier()==null && 
+                        (exemplaire.getStatut().equals(Statut.DISPONIBLE) || (exemplaire.getStatut().equals(Statut.RESERVE) && panier.getAdherent().equals(exemplaire.getReservePourCetAdherent()))))
                 {
-                    exemplaire.setReservePourCetAdherent(null);
+                   exemplaire.setPanier(panier);
+
+                   if(exemplaire.getStatut().equals(Statut.RESERVE) && panier.getAdherent().equals(exemplaire.getReservePourCetAdherent()))
+                   {
+                       exemplaire.setReservePourCetAdherent(null);
+                   }
                 }
+            
+            
+              //persist the person entity
+              em.persist(exemplaire);
              }
-            
-            
-            //persist the person entity
-            em.persist(exemplaire);
-            
             //commit transaction which will trigger the em to 
             //commit newly created entity into database
             utx.commit();

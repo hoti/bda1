@@ -85,8 +85,6 @@ public class RendreExemplaireEmprunteServlet extends HttpServlet {
             em.persist(exemplaire);
 
 
-            em.refresh(exemplaire,LockModeType.OPTIMISTIC);
-
 
             //commit transaction which will trigger the em to 
             //commit newly created entity into database
