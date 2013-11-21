@@ -61,7 +61,7 @@ public class ListCommandeServlet extends HttpServlet {
             em = emf.createEntityManager();
 
             //query for all the persons in database
-            List commandes = em.createQuery("select p from Commande p").getResultList();
+            List commandes = em.createQuery("select p from Commande p order by p.fournisseur").getResultList();
             request.setAttribute("commandeList",commandes);
             
             //Forward to the jsp page for rendering
