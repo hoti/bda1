@@ -21,6 +21,10 @@
             <li><a href="ListGenre"><strong>Gestion des Genres</strong></a></li>
             <li><a href="ListAuteur"><strong>Gestion des Auteurs</strong></a></li>
              <li><a href="ListExemplaire"><strong>Gestion des Exemplaires</strong></a></li>
+             
+             <li><a href="ListFournisseur"><strong>Gestion des Fournisseurs</strong></a></li>
+             <li><a href="ListCommande"><strong>Gestion des Commandes</strong></a></li>
+              <li><a href="ListElementDeCommande"><strong>Gestion des élements de Commande</strong></a></li>
         </ul>
         
     </body>
