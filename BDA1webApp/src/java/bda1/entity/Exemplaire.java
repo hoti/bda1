@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
+import javax.persistence.Version;
 
 /**
  *
@@ -23,6 +24,7 @@ import javax.persistence.Temporal;
 + "WHERE o.id = :id ")
 public class Exemplaire implements Serializable {
     private static final long serialVersionUID = 1L;
+    @Version int version;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

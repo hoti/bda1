@@ -21,6 +21,7 @@ import javax.persistence.PersistenceUnit;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityManager;
 import javax.annotation.Resource;
+import javax.persistence.LockModeType;
 import javax.persistence.NoResultException;
 import javax.transaction.UserTransaction;
 
@@ -71,6 +72,7 @@ public class ReserverProduitServlet extends HttpServlet {
 
             }
             
+            em.lock(produit,LockModeType.OPTIMISTIC);
             Adherent adherent =null;
             try {
              adherent = (Adherent) em.createNamedQuery("findAdherent",Adherent.class).setParameter("id", adherentTxt).getSingleResult();
@@ -85,7 +87,7 @@ public class ReserverProduitServlet extends HttpServlet {
            
             //persist the person entity
             em.persist(produit);
-            
+            em.refresh(produit,LockModeType.OPTIMISTIC);
             //commit transaction which will trigger the em to 
             //commit newly created entity into database
             utx.commit();
