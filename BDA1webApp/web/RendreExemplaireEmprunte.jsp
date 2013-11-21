@@ -1,6 +1,5 @@
-<%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.text.DateFormat"%>
-
+<%@page import="bda1.entity.Statut"%>
+<%@page import="bda1.entity.ProduitType"%>
 <!--
   Copyright (c) 2010, Oracle. All rights reserved.
 
@@ -34,7 +33,6 @@
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -42,53 +40,17 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>List Of Produits</title>
+        <title>Rendre un exemplaire emprunté</title>
     </head>
     <body>
 
-    <h1>List of Produits currently in Database</h1>
-
-<table id="produitsListTable" border="3">
-<tr >
-    <th bgcolor=>ID</th>
-    <th bgcolor=>titre</th>
-    <th bgcolor=>peutEtreReemprunter</th>
-    <th bgcolor=>Adhérents ayant réservé ce produit</th>
-    <th bgcolor=>datePublication</th>
-    <th bgcolor=>auteurs</th>
-    <th bgcolor=>genres</th>
-    <th bgcolor=>type</th>
-</tr>
-<c:forEach var="produit" begin="0" items="${requestScope.produitList}">
-    <tr>
-    <td>${produit.id}&nbsp;&nbsp;</td> 
-    <td>${produit.titre}&nbsp;&nbsp;</td>
-    <td>${produit.peutEtreReemprunter}&nbsp;&nbsp;</td> 
-    <td>
-        <c:forEach var="adherentDemandeur" begin="0" items="${produit.getAdherentsDemandeurs()}">
-            ${adherentDemandeur.id}&nbsp;&nbsp;<br />
-        </c:forEach>
-    </td>
-    
-    <td><fmt:formatDate pattern="yyyy-MM-dd" value="${produit.datePublication}" />&nbsp;&nbsp;</td> 
-    
-    <td>
-        <c:forEach var="produitAuteur" begin="0" items="${produit.auteurs}">
-            ${produitAuteur.nom}&nbsp;&nbsp;<br />
-        </c:forEach>
-    </td>
-    <td>
-        <c:forEach var="produitGenre" begin="0" items="${produit.genres}">
-            ${produitGenre.nom}&nbsp;&nbsp;<br />
-        </c:forEach>
-    </td>
-    <td>${produit.type.toString()}&nbsp;&nbsp;</td>    
-</tr> 
-
-</c:forEach>
-
-</table>
-<a href="AddProduit.jsp"><strong>Add a Produit Record</strong></a>
-<a href="ReserverProduit.jsp"><strong>Réserver un Produit</strong></a>
+    <h1>Rendre un exemplaire emprunté</h1>
+    <form id="rendreExemplaireEmprunteForm" action="RendreExemplaireEmprunte" method="post">
+    <table>
+        <tr><td>Exemplaire :</td><td><input type="text" id = "exemplaire" name="exemplaire" /></td></tr>
+    </table>
+    <input type="submit" id="RendreExemplaireEmprunte" value="RendreExemplaireEmprunte" />
+    </form>
+   <a href="ListExemplaire"><strong>Go to List of Exemplaires</strong></a>
 </body>
 </html>

@@ -20,8 +20,7 @@
             <li><a href="ListProduit"><strong>Gestion des Produits</strong></a></li>
             <li><a href="ListGenre"><strong>Gestion des Genres</strong></a></li>
             <li><a href="ListAuteur"><strong>Gestion des Auteurs</strong></a></li>
-            
-             <li><a href="AddExemplaire.jsp"><strong>Ajouter un Exemplaire</strong></a></li>
+             <li><a href="ListExemplaire"><strong>Gestion des Exemplaires</strong></a></li>
         </ul>
         
     </body>

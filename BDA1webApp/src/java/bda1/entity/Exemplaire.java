@@ -2,6 +2,7 @@
 package bda1.entity;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
@@ -17,6 +19,8 @@ import javax.persistence.Temporal;
  * @author GaspardP <gaspardp@kth.se>
  */
 @Entity
+@NamedQuery(name = "findExemplaire", query = "SELECT o FROM Exemplaire o "
++ "WHERE o.id = :id ")
 public class Exemplaire implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -27,9 +31,9 @@ public class Exemplaire implements Serializable {
     private int NombreEmprunt;
     
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date dateReservation;
+    private Date dateDebutEmprunt;
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date DateFinReservation;
+    private Date dateFinEmprunt;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date DateArriveeStock;
     
@@ -41,6 +45,15 @@ public class Exemplaire implements Serializable {
     @ManyToOne
     @JoinColumn(name="panier_id", referencedColumnName="id")
     private Panier panier;
+    
+    @OneToOne
+    @JoinColumn(name="emprunteur_id", referencedColumnName="id")
+    private Adherent emprunteurActuel;
+    
+    @OneToOne
+    @JoinColumn(name="emprunteurReserve_id", referencedColumnName="id")
+    private Adherent reservePourCetAdherent;
+    
     
     /*=============================================================*
      * GETTER AND SETTER
@@ -54,6 +67,25 @@ public class Exemplaire implements Serializable {
         this.produit = produit;
     }
   
+    public boolean supposePerduEmprunt()
+    {
+        Calendar c = Calendar.getInstance(); 
+        c.setTime(new Date()); 
+        c.add(Calendar.DATE, -30);
+
+        if(dateFinEmprunt!=null)
+            return dateFinEmprunt.before(c.getTime());
+        else
+            return false;
+    }
+    
+    public boolean retardEmprunt()
+    {
+        if(dateFinEmprunt!=null)
+            return dateFinEmprunt.before(new Date());
+        else
+            return false;
+    }
     
     
     public Long getId() {
@@ -80,21 +112,23 @@ public class Exemplaire implements Serializable {
         this.NombreEmprunt = NombreEmprunt;
     }
 
-    public Date getDateReservation() {
-        return dateReservation;
+    public Date getDateDebutEmprunt() {
+        return dateDebutEmprunt;
     }
 
-    public void setDateReservation(Date dateReservation) {
-        this.dateReservation = dateReservation;
+    public void setDateDebutEmprunt(Date dateDebutEmprunt) {
+        this.dateDebutEmprunt = dateDebutEmprunt;
     }
 
-    public Date getDateFinReservation() {
-        return DateFinReservation;
+    public Date getDateFinEmprunt() {
+        return dateFinEmprunt;
     }
 
-    public void setDateFinReservation(Date DateFinReservation) {
-        this.DateFinReservation = DateFinReservation;
+    public void setDateFinEmprunt(Date dateFinEmprunt) {
+        this.dateFinEmprunt = dateFinEmprunt;
     }
+
+    
 
     public Date getDateArriveeStock() {
         return DateArriveeStock;
@@ -120,6 +154,25 @@ public class Exemplaire implements Serializable {
         this.panier = panier;
     }
 
+    public Adherent getEmprunteurActuel() {
+        return emprunteurActuel;
+    }
+
+    public void setEmprunteurActuel(Adherent emprunteurActuel) {
+        this.emprunteurActuel = emprunteurActuel;
+    }
+
+    public Adherent getReservePourCetAdherent() {
+        return reservePourCetAdherent;
+    }
+
+    public void setReservePourCetAdherent(Adherent reservePourCetAdherent) {
+        this.reservePourCetAdherent = reservePourCetAdherent;
+    }
+    
+    
+
+    
     
     
     @Override

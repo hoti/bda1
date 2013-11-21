@@ -10,9 +10,7 @@ import bda1.entity.*;
 import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
@@ -28,8 +26,8 @@ import javax.transaction.UserTransaction;
  *
  * @author GaspardP <gaspardp@kth.se>
  */
-@WebServlet(name="AddExemplaireServlet", urlPatterns={"/AddExemplaire"})
-public class AddExemplaireServlet extends HttpServlet {
+@WebServlet(name="RendreExemplaireEmprunteServlet", urlPatterns={"/RendreExemplaireEmprunte"})
+public class RendreExemplaireEmprunteServlet extends HttpServlet {
     
     @PersistenceUnit
     //The emf corresponding to 
@@ -59,47 +57,38 @@ public class AddExemplaireServlet extends HttpServlet {
             
             
             //Get the data from user's form
-            String statutString = (String) request.getParameter("statut");
-            String DateArriveeStockText = (String) request.getParameter("DateArriveeStock");
-            Long produitTxt = Long.valueOf((String) request.getParameter("produit")).longValue();
- 
-            Statut statut=null;
-            for(Statut t:Statut.values())
-            {
-                if(t.toString().equals(statutString))
-                {
-                    statut=t;
-                }
-            }
-            
-            DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-            Date DateArriveeStock = null;
-
-            
-            if(DateArriveeStockText!=null && !DateArriveeStockText.equals(""))
-                DateArriveeStock = formatter.parse(DateArriveeStockText);
-            
-            
+           Long exemplaireTxt = Long.valueOf((String) request.getParameter("exemplaire")).longValue();
            
-            Produit produit =null;
+            Exemplaire exemplaire =null;
             try {
-             produit = (Produit) em.createNamedQuery("findProduit",Produit.class).setParameter("id", produitTxt).getSingleResult();
+             exemplaire = (Exemplaire) em.createNamedQuery("findExemplaire",Exemplaire.class).setParameter("id", exemplaireTxt).getSingleResult();
             }
             catch (NoResultException e)
             {
 
             }
             
-            
-            
-            //Create a person instance out of it
-            Exemplaire exemplaire = new Exemplaire(statut,DateArriveeStock,produit);
-            
-           
-            
-            
+           if(exemplaire.getProduit().getAdherentsDemandeurs().size()<=0)
+               exemplaire.setStatut(Statut.DISPONIBLE);
+           else
+           {
+               exemplaire.setStatut(Statut.RESERVE);
+               Adherent adherentDemandeur=exemplaire.getProduit().getAdherentsDemandeurs().get(0);
+               exemplaire.setReservePourCetAdherent(adherentDemandeur);
+                       
+               exemplaire.getProduit().getAdherentsDemandeurs().remove(0);               
+           }
+
+            exemplaire.setEmprunteurActuel(null);
+
+            exemplaire.setDateDebutEmprunt(null);
+            exemplaire.setDateFinEmprunt(null);
             //persist the person entity
             em.persist(exemplaire);
+
+
+           
+            
             
             //commit transaction which will trigger the em to 
             //commit newly created entity into database

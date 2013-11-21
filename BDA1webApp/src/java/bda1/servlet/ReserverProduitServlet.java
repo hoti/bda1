@@ -28,8 +28,8 @@ import javax.transaction.UserTransaction;
  *
  * @author GaspardP <gaspardp@kth.se>
  */
-@WebServlet(name="AddProduitServlet", urlPatterns={"/AddProduit"})
-public class AddProduitServlet extends HttpServlet {
+@WebServlet(name="ReserverProduitServlet", urlPatterns={"/ReserverProduit"})
+public class ReserverProduitServlet extends HttpServlet {
     
     @PersistenceUnit
     //The emf corresponding to 
@@ -59,102 +59,30 @@ public class AddProduitServlet extends HttpServlet {
             
             
             //Get the data from user's form
-            String titre = (String) request.getParameter("titre");
-            Boolean peutEtreReemprunter   =  Boolean.valueOf(request.getParameter("peutEtreReemprunter"));
-            String typeString = (String) request.getParameter("type");
-
+            Long produitTxt = Long.valueOf((String) request.getParameter("produit")).longValue();
+            Long adherentTxt = Long.valueOf((String) request.getParameter("adherent")).longValue();
             
-            ProduitType type=null;
-            for(ProduitType t:ProduitType.values())
-            {
-                if(t.toString().equals(typeString))
-                {
-                    type=t;
-                }
-            }
-            
-            Date datePublication = new Date();
-
-            
-            String auteur1Txt = (String) request.getParameter("auteur1");
-            String auteur2Txt = (String) request.getParameter("auteur2");
-            String auteur3Txt = (String) request.getParameter("auteur3");
-            
-            Auteur auteur1 =null;
+            Produit produit =null;
             try {
-             auteur1 = (Auteur) em.createNamedQuery("findAuteur",Auteur.class).setParameter("nom", auteur1Txt).getSingleResult();
+             produit = (Produit) em.createNamedQuery("findProduit",Produit.class).setParameter("id", produitTxt).getSingleResult();
             }
             catch (NoResultException e)
             {
 
             }
-            Auteur auteur2 =null;
+            
+            Adherent adherent =null;
             try {
-             auteur2 = (Auteur) em.createNamedQuery("findAuteur",Auteur.class).setParameter("nom", auteur2Txt).getSingleResult();
+             adherent = (Adherent) em.createNamedQuery("findAdherent",Adherent.class).setParameter("id", adherentTxt).getSingleResult();
             }
             catch (NoResultException e)
             {
 
             }
-            Auteur auteur3 =null;
-            try {
-             auteur3 = (Auteur) em.createNamedQuery("findAuteur",Auteur.class).setParameter("nom", auteur3Txt).getSingleResult();
-            }
-            catch (NoResultException e)
-            {
-
-            }
-            List<Auteur> auteurs=new ArrayList<Auteur>();
-            if(auteur1!=null)
-                auteurs.add(auteur1);
-            if(auteur2!=null)
-                auteurs.add(auteur2);
-            if(auteur3!=null)
-                auteurs.add(auteur3);
             
             
-            String genre1Txt = (String) request.getParameter("genre1");
-            String genre2Txt = (String) request.getParameter("genre2");
-            String genre3Txt = (String) request.getParameter("genre3");
-            
-            Genre genre1 =null;
-            try {
-             genre1 = (Genre) em.createNamedQuery("findGenre",Genre.class).setParameter("nom", genre1Txt).getSingleResult();
-            }
-            catch (NoResultException e)
-            {
-
-            }
-            Genre genre2 =null;
-            try {
-             genre2 = (Genre) em.createNamedQuery("findGenre",Genre.class).setParameter("nom", genre2Txt).getSingleResult();
-            }
-            catch (NoResultException e)
-            {
-
-            }
-            Genre genre3 =null;
-            try {
-             genre3 = (Genre) em.createNamedQuery("findGenre",Genre.class).setParameter("nom", genre3Txt).getSingleResult();
-            }
-            catch (NoResultException e)
-            {
-
-            }
-            List<Genre> genres=new ArrayList<Genre>();
-            if(genre1!=null)
-                genres.add(genre1);
-            if(genre2!=null)
-                genres.add(genre2);
-            if(genre3!=null)
-                genres.add(genre3);
-            
-            //Create a person instance out of it
-            Produit produit = new Produit(titre, peutEtreReemprunter,datePublication,auteurs,genres,type);
-            
+           produit.addAdherentsDemandeur(adherent);
            
-            
-            
             //persist the person entity
             em.persist(produit);
             

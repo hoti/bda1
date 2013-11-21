@@ -42,53 +42,49 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>List Of Produits</title>
+        <title>List Of Exemplaires</title>
     </head>
     <body>
 
-    <h1>List of Produits currently in Database</h1>
+    <h1>List of Exemplaires currently in Database</h1>
 
-<table id="produitsListTable" border="3">
+<table id="exemplairesListTable" border="3">
 <tr >
     <th bgcolor=>ID</th>
-    <th bgcolor=>titre</th>
-    <th bgcolor=>peutEtreReemprunter</th>
-    <th bgcolor=>Adhérents ayant réservé ce produit</th>
-    <th bgcolor=>datePublication</th>
-    <th bgcolor=>auteurs</th>
-    <th bgcolor=>genres</th>
-    <th bgcolor=>type</th>
+    <th bgcolor=>statut</th>
+    <th bgcolor=>nombre d'emprunt</th>
+    <th bgcolor=>Emprunteur actuel</th>
+    <th bgcolor=>Réservé pour cet adhérent</th>
+    <th bgcolor=>dateDebutEmprunt</th>
+    <th bgcolor=>dateFinEmprunt</th>
+    <th bgcolor=>Retard</th>
+    <th bgcolor=>Perdu</th>
+    <th bgcolor=>DateArriveeStock</th>
+    <th bgcolor=>produit</th>
+    <th bgcolor=>panier</th>
 </tr>
-<c:forEach var="produit" begin="0" items="${requestScope.produitList}">
+<c:forEach var="exemplaire" begin="0" items="${requestScope.exemplaireList}">
     <tr>
-    <td>${produit.id}&nbsp;&nbsp;</td> 
-    <td>${produit.titre}&nbsp;&nbsp;</td>
-    <td>${produit.peutEtreReemprunter}&nbsp;&nbsp;</td> 
-    <td>
-        <c:forEach var="adherentDemandeur" begin="0" items="${produit.getAdherentsDemandeurs()}">
-            ${adherentDemandeur.id}&nbsp;&nbsp;<br />
-        </c:forEach>
-    </td>
-    
-    <td><fmt:formatDate pattern="yyyy-MM-dd" value="${produit.datePublication}" />&nbsp;&nbsp;</td> 
-    
-    <td>
-        <c:forEach var="produitAuteur" begin="0" items="${produit.auteurs}">
-            ${produitAuteur.nom}&nbsp;&nbsp;<br />
-        </c:forEach>
-    </td>
-    <td>
-        <c:forEach var="produitGenre" begin="0" items="${produit.genres}">
-            ${produitGenre.nom}&nbsp;&nbsp;<br />
-        </c:forEach>
-    </td>
-    <td>${produit.type.toString()}&nbsp;&nbsp;</td>    
+    <td>${exemplaire.id}&nbsp;&nbsp;</td> 
+    <td>${exemplaire.statut.toString()}&nbsp;&nbsp;</td> 
+    <td>${exemplaire.getNombreEmprunt()}&nbsp;&nbsp;</td>
+    <td>${exemplaire.emprunteurActuel.id}&nbsp;&nbsp;</td>
+    <td>${exemplaire.reservePourCetAdherent.id}&nbsp;&nbsp;</td>
+    <td><fmt:formatDate pattern="yyyy-MM-dd" value="${exemplaire.dateDebutEmprunt}" />&nbsp;&nbsp;</td> 
+    <td><fmt:formatDate pattern="yyyy-MM-dd" value="${exemplaire.dateFinEmprunt}" />&nbsp;&nbsp;</td> 
+    <td><c:if test="${exemplaire.retardEmprunt() == true }">Retard</c:if>&nbsp;&nbsp;</td> 
+    <td><c:if test="${exemplaire.supposePerduEmprunt() == true }">Perdu</c:if>&nbsp;&nbsp;</td> 
+    <td><fmt:formatDate pattern="yyyy-MM-dd" value="${exemplaire.getDateArriveeStock()}" />&nbsp;&nbsp;</td> 
+    <td>${exemplaire.produit.id}&nbsp;&nbsp;</td> 
+    <td>${exemplaire.panier.id}&nbsp;&nbsp;</td> 
 </tr> 
 
 </c:forEach>
 
 </table>
-<a href="AddProduit.jsp"><strong>Add a Produit Record</strong></a>
-<a href="ReserverProduit.jsp"><strong>Réserver un Produit</strong></a>
+<a href="AddExemplaire.jsp"><strong>Add a Exemplaire Record</strong></a>
+<a href="AddExemplaireDansPanier.jsp"><strong>Ajout d'un Exemplaire dans un panier</strong></a>
+<a href="EmprunterPanier.jsp"><strong>Emprunter un panier</strong></a>
+<a href="RendreExemplaireEmprunte.jsp"><strong>Rendre un exemplaire emprunté</strong></a>
 </body>
 </html>

@@ -10,9 +10,7 @@ import bda1.entity.*;
 import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
@@ -28,8 +26,8 @@ import javax.transaction.UserTransaction;
  *
  * @author GaspardP <gaspardp@kth.se>
  */
-@WebServlet(name="AddExemplaireServlet", urlPatterns={"/AddExemplaire"})
-public class AddExemplaireServlet extends HttpServlet {
+@WebServlet(name="EmprunterPanierServlet", urlPatterns={"/EmprunterPanier"})
+public class EmprunterPanierServlet extends HttpServlet {
     
     @PersistenceUnit
     //The emf corresponding to 
@@ -59,47 +57,50 @@ public class AddExemplaireServlet extends HttpServlet {
             
             
             //Get the data from user's form
-            String statutString = (String) request.getParameter("statut");
-            String DateArriveeStockText = (String) request.getParameter("DateArriveeStock");
-            Long produitTxt = Long.valueOf((String) request.getParameter("produit")).longValue();
- 
-            Statut statut=null;
-            for(Statut t:Statut.values())
-            {
-                if(t.toString().equals(statutString))
-                {
-                    statut=t;
-                }
-            }
-            
-            DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-            Date DateArriveeStock = null;
-
-            
-            if(DateArriveeStockText!=null && !DateArriveeStockText.equals(""))
-                DateArriveeStock = formatter.parse(DateArriveeStockText);
-            
-            
+           Long panierTxt = Long.valueOf((String) request.getParameter("panier")).longValue();
+           String str_dateDebutEmprunt   = (String) request.getParameter("dateDebutEmprunt");
+           String str_dateFinEmprunt   = (String) request.getParameter("dateFinEmprunt");
            
-            Produit produit =null;
+            Panier panier =null;
             try {
-             produit = (Produit) em.createNamedQuery("findProduit",Produit.class).setParameter("id", produitTxt).getSingleResult();
+             panier = (Panier) em.createNamedQuery("findPanier",Panier.class).setParameter("id", panierTxt).getSingleResult();
             }
             catch (NoResultException e)
             {
 
             }
             
+            DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            Date dateDebutEmprunt = null;
+            Date dateFinEmprunt = null;
             
             
-            //Create a person instance out of it
-            Exemplaire exemplaire = new Exemplaire(statut,DateArriveeStock,produit);
+            if(str_dateDebutEmprunt!=null && !str_dateDebutEmprunt.equals(""))
+                dateDebutEmprunt = formatter.parse(str_dateDebutEmprunt);
+            if(str_dateFinEmprunt!=null && !str_dateFinEmprunt.equals(""))
+                dateFinEmprunt = formatter.parse(str_dateFinEmprunt);
+            
+            
+            
+            for(Exemplaire e : panier.getExemplaires())
+            {
+                if(dateDebutEmprunt.before(dateFinEmprunt) && dateDebutEmprunt.after(new Date()))
+                {
+                    e.setStatut(Statut.EMPRUNTE);
+                    e.setPanier(null);
+                    e.setNombreEmprunt(e.getNombreEmprunt()+1);
+                    e.setEmprunteurActuel(panier.getAdherent());
+                
+                    e.setDateDebutEmprunt(dateDebutEmprunt);
+                    e.setDateFinEmprunt(dateFinEmprunt);
+                    //persist the person entity
+                    em.persist(e);
+                }
+            }
+            
             
            
             
-            
-            //persist the person entity
-            em.persist(exemplaire);
             
             //commit transaction which will trigger the em to 
             //commit newly created entity into database

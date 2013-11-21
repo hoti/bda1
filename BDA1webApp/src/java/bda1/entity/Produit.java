@@ -32,7 +32,12 @@ public class Produit implements Serializable {
     
     private String titre;
     private boolean peutEtreReemprunter;
-    private int nombreDeDemandes;
+    
+    @ManyToMany
+    @JoinTable(name="produits_adherents",
+            joinColumns=@JoinColumn(name="produit_id", referencedColumnName="id"),
+            inverseJoinColumns=@JoinColumn(name="adherent_id", referencedColumnName="id"))
+    private List<Adherent> adherentsDemandeurs;
     
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date datePublication;
@@ -68,17 +73,25 @@ public class Produit implements Serializable {
     }
 
     
-     public Produit(String titre, boolean peutEtreReemprunter, int nombreDeDemandes, Date datePublication, List<Auteur> auteurs, List<Genre> genres, ProduitType type) {
+     public Produit(String titre, boolean peutEtreReemprunter, Date datePublication, List<Auteur> auteurs, List<Genre> genres, ProduitType type) {
         this.titre = titre;
         this.peutEtreReemprunter = peutEtreReemprunter;
-        this.nombreDeDemandes = nombreDeDemandes;
         this.datePublication = datePublication;
         this.auteurs = auteurs;
         this.genres = genres;
         this.type = type;
     }
  
-     
+     public int nbExemplairesDisponibles()
+     {
+         int nb=0;
+         for(Exemplaire e:exemplaires)
+         {
+             if(e.getStatut().equals(Statut.DISPONIBLE) && e.getDateArriveeStock().before(new Date()))
+                 nb++;
+         }
+         return nb;
+     }        
      
     public Long getId() {
         return id;
@@ -136,14 +149,15 @@ public class Produit implements Serializable {
         this.peutEtreReemprunter = peutEtreReemprunter;
     }
 
-    public int getNombreDeDemandes() {
-        return nombreDeDemandes;
+    public List<Adherent> getAdherentsDemandeurs() {
+        return adherentsDemandeurs;
     }
 
-    public void setNombreDeDemandes(int nombreDeDemandes) {
-        this.nombreDeDemandes = nombreDeDemandes;
+    public void addAdherentsDemandeur(Adherent adherentsDemandeur) {
+        this.adherentsDemandeurs.add(adherentsDemandeur);
     }
 
+ 
     @Override
     public int hashCode() {
         int hash = 0;
