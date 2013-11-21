@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -19,6 +20,8 @@ import javax.persistence.UniqueConstraint;
  * @author GaspardP <gaspardp@kth.se>
  */
 @Entity
+@NamedQuery(name = "findCompte", query = "SELECT o FROM Compte o "
++ "WHERE o.id = :id ")
 @Table(uniqueConstraints=@UniqueConstraint(columnNames = {"nom", "prenom","dateNaissance"}))
 public class Compte implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -41,11 +44,8 @@ public class Compte implements Serializable {
     @ManyToOne(cascade = ALL)
     private Coordonnees coordonnees;
     
-    /**
-     * Cotisation pour l'utilisation du système d'emprunt à la
-     * bibliothèque
-     */
-    private float somme;
+
+    private boolean aPaye;
 
     
     public Compte() {
@@ -57,7 +57,7 @@ public class Compte implements Serializable {
         this.dateNaissance = dateNaissance;
         this.dateInscription = dateInscription;
         this.coordonnees = coordonnees;
-        this.somme = 0;
+        this.aPaye = false;
     }
     
     
@@ -66,7 +66,17 @@ public class Compte implements Serializable {
      * DEFAULT METHODS
      ***************************************************************/
     
-    
+    public int montantAdhesion()
+    {
+        if(coordonnees.getAdresse().equals("ANTIBES") && this.getDateNaissance().after(new Date(1991, 9, 18)))
+        {
+            return 100;
+        }
+        else
+        {
+            return 150;
+        }
+    }
     
     @Override
     public int hashCode() {
@@ -142,13 +152,15 @@ public class Compte implements Serializable {
         this.coordonnees = coordonnees;
     }
 
-    public float getSomme() {
-        return somme;
+    public boolean isaPaye() {
+        return aPaye;
     }
 
-    public void setSomme(float somme) {
-        this.somme = somme;
+    public void setaPaye(boolean aPaye) {
+        this.aPaye = aPaye;
     }
+
+    
 
 
 }

@@ -1,6 +1,4 @@
-<%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.text.DateFormat"%>
-
+<%@page import="bda1.entity.ProduitType"%>
 <!--
   Copyright (c) 2010, Oracle. All rights reserved.
 
@@ -34,7 +32,6 @@
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -42,39 +39,17 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>List Of Comptes</title>
+        <title>Payer une adhésion</title>
     </head>
     <body>
 
-    <h1>List of Comptes currently in Database</h1>
-
-<table id="comptesListTable" border="3">
-<tr >
-    <th bgcolor=>ID</th>
-    <th bgcolor=>nom</th>
-    <th bgcolor=>prenom</th>
-    <th bgcolor=>dateNaissance</th>
-    <th bgcolor=>dateInscription</th>
-    <th bgcolor=>adresse</th>
-    <th bgcolor=>numeroTelephone</th>
-    <th bgcolor=>A payé</th>
-</tr>
-<c:forEach var="compte" begin="0" items="${requestScope.compteList}">
-    <tr>
-    <td>${compte.id}&nbsp;&nbsp;</td> 
-    <td>${compte.nom}&nbsp;&nbsp;</td> 
-    <td>${compte.prenom}&nbsp;&nbsp;</td>    
-    <td><fmt:formatDate pattern="yyyy-MM-dd" value="${compte.dateNaissance}" />&nbsp;&nbsp;</td> 
-    <td><fmt:formatDate pattern="yyyy-MM-dd" value="${compte.dateInscription}" />&nbsp;&nbsp;</td> 
-    <td>${compte.coordonnees.adresse}&nbsp;&nbsp;</td> 
-    <td>${compte.coordonnees.numeroTelephone}&nbsp;&nbsp;</td>
-    <td>${compte.aPaye} (${compte.montantAdhesion()})&nbsp;&nbsp;</td> 
-</tr> 
-
-</c:forEach>
-
-</table>
-<a href="CreateCompte.jsp"><strong>Create a Compte Record</strong></a>
-<a href="PayerAdhesion.jsp"><strong>Payer une adhésion</strong></a>
+    <h1>Payer une adhésion</h1>
+    <form id="payerAdhesionForm" action="PayerAdhesion" method="post">
+    <table>
+        <tr><td>Compte : </td><td><input type="text" id = "compte" name="compte" /></td></tr>
+    </table>
+    <input type="submit" id="PayerAdhesion" value="PayerAdhesion" />
+    </form>
+   <!-- <a href="ListCompte"><strong>Go to List of compte</strong></a>-->
 </body>
 </html>

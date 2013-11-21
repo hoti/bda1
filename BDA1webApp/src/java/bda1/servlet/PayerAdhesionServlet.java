@@ -28,8 +28,8 @@ import javax.transaction.UserTransaction;
  *
  * @author GaspardP <gaspardp@kth.se>
  */
-@WebServlet(name="AddExemplaireDansPanierServlet", urlPatterns={"/AddExemplaireDansPanier"})
-public class AddExemplaireDansPanierServlet extends HttpServlet {
+@WebServlet(name="PayerAdhesionServlet", urlPatterns={"/PayerAdhesion"})
+public class PayerAdhesionServlet extends HttpServlet {
     
     @PersistenceUnit
     //The emf corresponding to 
@@ -59,43 +59,21 @@ public class AddExemplaireDansPanierServlet extends HttpServlet {
             
             
             //Get the data from user's form
-            Long exemplaireTxt = Long.valueOf((String) request.getParameter("exemplaire")).longValue();
-            Long panierTxt = Long.valueOf((String) request.getParameter("panier")).longValue();
+            Long compteTxt = Long.valueOf((String) request.getParameter("compte")).longValue();
+             
             
-            Exemplaire exemplaire =null;
+            Compte compte =null;
             try {
-             exemplaire = (Exemplaire) em.createNamedQuery("findExemplaire",Exemplaire.class).setParameter("id", exemplaireTxt).getSingleResult();
+             compte = (Compte) em.createNamedQuery("findCompte",Compte.class).setParameter("id", compteTxt).getSingleResult();
             }
             catch (NoResultException e)
             {
 
             }
-            
-           
-            
-            Panier panier =null;
-            try {
-             panier = (Panier) em.createNamedQuery("findPanier",Panier.class).setParameter("id", panierTxt).getSingleResult();
-            }
-            catch (NoResultException e)
-            {
-
-            }
-            
-             if(exemplaire.getDateArriveeStock().before(new Date()) &&  exemplaire.getPanier()==null && 
-                     (exemplaire.getStatut().equals(Statut.DISPONIBLE) || (exemplaire.getStatut().equals(Statut.RESERVE) && panier.getAdherent().equals(exemplaire.getReservePourCetAdherent()))))
-             {
-                exemplaire.setPanier(panier);
-                
-                if(exemplaire.getStatut().equals(Statut.RESERVE) && panier.getAdherent().equals(exemplaire.getReservePourCetAdherent()))
-                {
-                    exemplaire.setReservePourCetAdherent(null);
-                }
-             }
-            
+            compte.setaPaye(true);
             
             //persist the person entity
-            em.persist(exemplaire);
+            em.persist(compte);
             
             //commit transaction which will trigger the em to 
             //commit newly created entity into database
@@ -103,7 +81,7 @@ public class AddExemplaireDansPanierServlet extends HttpServlet {
             
             //Forward to ListPerson servlet to list persons along with the newly
             //created person above
-            request.getRequestDispatcher("ListExemplaire").forward(request, response);
+            request.getRequestDispatcher("ListCompte").forward(request, response);
         } catch (Exception ex) {
             throw new ServletException(ex);
         } finally {
